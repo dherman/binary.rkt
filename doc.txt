@@ -1,0 +1,81 @@
+_Binary_
+_binary_
+
+This collection provides one file:
+
+ _binary.ss_: utilities for binary data
+
+======================================================================
+
+TYPES ----------------------------------------------------------------
+
+> bytes-list = (listof bytes)
+> bytes-vector = (vector bytes)
+
+
+FUNCTIONS ------------------------------------------------------------
+
+> read-bytes-list :: [integer input-port] -> bytes-list
+
+Reads a list of byte-strings from the given input port. The integer
+indicates the maximum length of each byte string (only the last byte
+string in the list may be smaller than the maximum).
+
+The default byte-string length is 1024.
+
+The default input port is the current value of (current-input-port).
+
+> read-bytes-vector :: [integer input-port] -> bytes-vector
+
+Reads a vector of byte-strings from the given input port. The integer
+indicates the maximum length of each byte string (only the last byte
+string in the vector may be smaller than the maximum).
+
+The default byte-string length is 1024.
+
+The default input port is the current value of (current-input-port).
+
+
+MACROS ---------------------------------------------------------------
+
+> compile-bytes :: (compile-bytes string) => expression<bytes>
+
+Reads up to 1024 bytes of the contents of the file indicated by the
+string, and compiles to a byte-string literal that represents the
+contents of the file.
+
+> compile-bytes :: (compile-bytes integer string) => expression<bytes>
+
+Reads up to the given number of bytes of the contents of the file
+indicated by the string, and compiles to a byte-string literal that
+represents the contents of the file.
+
+> compile-bytes-list :: (compile-bytes-list string) => expression<bytes-list>
+
+Reads the file indicated by the string and compiles to an expression
+that evaluates to a list of byte-strings of length up to 1024 each,
+the concatenation of which represents the contents of the file.
+Only the last byte string in the list may be shorter than 1024 bytes.
+
+> compile-bytes-list :: (compile-bytes-list integer string) => expression<bytes-list>
+
+Reads the file indicated by the string and compiles to an expression
+that evaluates to a list of byte-strings, the concatenation of which
+represents the contents of the file. Each byte string in the list has
+the length given in the integer argument, except possibly the last byte
+string in the list, which may be shorter.
+
+> compile-bytes-vector :: (compile-bytes-list string) => expression<bytes-vector>
+
+Reads the file indicated by the string and compiles to an expression
+that evaluates to a vector of byte-strings of length up to 1024 each,
+the concatenation of which represents the contents of the file.
+Only the last byte string in the vector may be shorter than 1024 bytes.
+
+> compile-bytes-vector :: (compile-bytes-list integer string) => expression<bytes-vector>
+
+Reads the file indicated by the string and compiles to an expression
+that evaluates to a vector of byte-strings, the concatenation of which
+represents the contents of the file. Each byte string in the vector has
+the length given in the integer argument, except possibly the last byte
+string in the vector, which may be shorter.
